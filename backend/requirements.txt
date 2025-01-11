@@ -1,0 +1,17 @@
+fastapi
+redis
+types-redis
+uvicorn
+psycopg
+psycopg-pool
+psycopg-binary
+sqlmodel
+pydantic-settings
+pydantic
+email-validator
+pydantic_core
+SQLAlchemy
+tenacity
+passlib
+alembic
+bcrypt==4.0.1
