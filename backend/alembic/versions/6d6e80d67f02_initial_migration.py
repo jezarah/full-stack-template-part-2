@@ -1,8 +1,8 @@
 """Initial migration
 
-Revision ID: 8d79da95adf4
+Revision ID: 6d6e80d67f02
 Revises: 
-Create Date: 2025-01-08 19:36:52.450872
+Create Date: 2025-01-14 17:21:36.505909
 
 """
 from typing import Sequence, Union
@@ -11,8 +11,9 @@ from alembic import op
 import sqlalchemy as sa
 import sqlmodel.sql.sqltypes
 
+
 # revision identifiers, used by Alembic.
-revision: str = '8d79da95adf4'
+revision: str = '6d6e80d67f02'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -23,9 +24,8 @@ def upgrade() -> None:
     op.create_table('user',
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=False),
     sa.Column('email', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('role', sa.Integer(), nullable=False),
-    sa.Column('access_token', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-    sa.Column('id', sa.Uuid(), nullable=False),
     sa.Column('hashed_password', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
@@ -35,7 +35,7 @@ def upgrade() -> None:
     sa.Column('appointment_time', sa.DateTime(), nullable=False),
     sa.Column('id', sa.Uuid(), nullable=False),
     sa.Column('title', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=False),
-    sa.Column('owner_id', sa.Uuid(), nullable=False),
+    sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['owner_id'], ['user.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )

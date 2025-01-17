@@ -31,6 +31,5 @@ def init_db(session: Session) -> None:
             name=settings.FIRST_ADMIN_NAME,
             password=settings.FIRST_ADMIN_PASSWORD,
             role=1,
-            access_token=None
         )
-        user = create_user(session=session, user_create=user_in)
+        create_user(session=session, user_create=user_in)

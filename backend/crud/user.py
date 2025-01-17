@@ -1,10 +1,7 @@
-import uuid
-from typing import Any
+from sqlmodel import Session, select, delete, col
 
-from sqlmodel import Session, select
-
-from core.security import get_password_hash
-from model.models import User
+from core.security import get_password_hash, verify_password
+from model.models import User, Appointment
 from schema.user import UserCreate, UserUpdate, UsersPublic
 
 
@@ -18,7 +15,7 @@ def create_user(*, session: Session, user_create: UserCreate) -> User:
     return db_obj
 
 
-def update_user(*, session: Session, db_user: User, user_in: UserUpdate) -> Any:
+def update_user(*, session: Session, db_user: User, user_in: UserUpdate) -> User:
     user_data = user_in.model_dump(exclude_unset=True)
     extra_data = {}
     if "password" in user_data:
@@ -32,8 +29,8 @@ def update_user(*, session: Session, db_user: User, user_in: UserUpdate) -> Any:
     return db_user
 
 
-def get_users(*, session: Session, limit: int, offset: int) -> UsersPublic | None:
-    statement = select(User).limit(limit).offset(offset)
+def get_all_users(*, session: Session, limit: int, offset: int) -> UsersPublic | None:
+    statement = select(User).limit(limit).offset(offset).order_by(User.id)
     users = session.exec(statement).all()
     session_users = UsersPublic(
         data=users,
@@ -42,11 +39,9 @@ def get_users(*, session: Session, limit: int, offset: int) -> UsersPublic | Non
     return session_users
 
 
-def get_user_by_id(*, session: Session, user_id: uuid.UUID) -> User | None:
+def get_user_by_id(*, session: Session, user_id: int) -> User | None:
     statement = select(User).where(User.id == user_id)
     session_user = session.exec(statement).first()
-    if not session_user:
-        return None
     return session_user
 
 
@@ -54,3 +49,20 @@ def get_user_by_email(*, session: Session, email: str) -> User | None:
     statement = select(User).where(User.email == email)
     session_user = session.exec(statement).first()
     return session_user
+
+
+def delete_user_by_id(*, session: Session, user_id: int) -> None:
+    statement = delete(Appointment).where(col(Appointment.owner_id) == user_id)
+    session.exec(statement)
+    user = get_user_by_id(session=session, user_id=user_id)
+    session.delete(user)
+    session.commit()
+
+
+def authenticate(*, session: Session, email: str, password: str) -> User | None:
+    db_user = get_user_by_email(session=session, email=email)
+    if not db_user:
+        return None
+    if not verify_password(password, db_user.hashed_password):
+        return None
+    return db_user

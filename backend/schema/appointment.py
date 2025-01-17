@@ -18,7 +18,7 @@ class AppointmentCreate(AppointmentBase):
 # Read (or Delete), id is always required
 class AppointmentPublic(AppointmentBase):
     id: uuid.UUID
-    owner_id: uuid.UUID
+    owner_id: int
 
 
 class AppointmentsPublic(SQLModel):
