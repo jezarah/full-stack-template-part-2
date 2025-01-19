@@ -1,6 +1,6 @@
 # FullStack Template Tutorial Part 2: API Endpoints and User Authentication
 
-This repo corresponds to a [Tutorial](https://jezziecodes.com/blog-posts/fullstack-template-project-tutorial-p2-api) that goes through the process of creating a Fullstack template project step by step. To see the complete frontend and backend template see the full-stack-template-complete repo. 
+This repo corresponds to a [Tutorial](https://jezziecodes.com/blog-posts/fullstack-template-project-tutorial-p2-api) that goes through the process of creating a Fullstack template project step by step. To view the complete fullstack template (frontend and backend) see the full-stack-template-part-3 repo. 
 
 ### Steps to run this project:
 
