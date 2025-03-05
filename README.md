@@ -11,14 +11,14 @@ This repo corresponds to a [Tutorial](https://jezziecodes.com/blog-posts/fullsta
     # Postgres
     POSTGRES_SERVER=localhost
     POSTGRES_PORT=5432
-    POSTGRES_DB=demo2
+    POSTGRES_DB=demo
     POSTGRES_USER=postgres
-    POSTGRES_PASSWORD=postgres
+    POSTGRES_PASSWORD=change-this
 
     # First Admin User
     FIRST_ADMIN_EMAIL=admin@template.com
     FIRST_ADMIN_NAME=admin
-    FIRST_ADMIN_PASSWORD=password
+    FIRST_ADMIN_PASSWORD=change-this
 
     # Backend
     SECRET_KEY=my-32-character-ultra-secure-and-ultra-long-secret
